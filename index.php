@@ -1,3 +1,3 @@
 <?php
-    header('Location: /controllers/clientsController.php');
+    header('Location: /controllers/addUserController.php');
     exit();

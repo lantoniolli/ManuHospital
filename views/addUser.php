@@ -1,7 +1,7 @@
     <div class="row justify-content-center text-white">
         <div class="col-lg-6">
             <div class="container">
-                <form method="post" action="" enctype="multipart/form-data">
+                <form method="post" action="">
                     <h2>Ajouter un Patient</h2>
                     <div class="row">
                         <div class="col-md-6">

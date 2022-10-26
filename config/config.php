@@ -1,10 +1,8 @@
 <?php
 
-    define ('DSN', 'mysql:host=localhost;dbname=hospitale2n;charset=utf8');
+    define ('DSN', 'mysql:host=localhost;dbname=hospitale2N;charset=utf8');
     define ('USER','staff');
     define ('PWD','H2*01r!V0a/WRyOf');
-
-    $bdd = new PDO(DSN,USER,PWD);
 
 // Définition des regex.
     // Regex pour le nom et prénom.

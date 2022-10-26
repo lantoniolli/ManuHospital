@@ -94,13 +94,13 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link text-light">
+          <a href="/controllers/patientListController.php" class="nav-link text-light">
             <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
             <i class="bi bi-list-nested p-3"></i> Liste des Patients
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link text-light">
+          <a href="/controllers/addUserController.php" class="nav-link text-light">
             <i class="bi bi-person-plus-fill p-3"></i> Ajouter un Patient
           </a>
         </li>
@@ -150,5 +150,5 @@
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">Menu</small></button>
 
     <h2 class="display-4 text-white">Memorial Hospital</h2>
-    <p class="lead text-white mb-0">Gestion</p>
+    <p class="lead text-white mb-0">Gestion par Utilisateur.</p>
     <div class="separator"></div>

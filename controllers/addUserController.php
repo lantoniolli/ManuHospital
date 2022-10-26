@@ -1,13 +1,7 @@
 <?php
 
 require_once(__DIR__.'/../config/config.php');
-
-try {
-    //code...
-} catch (\Throwable $th) {
-    //throw $th;
-}
-
+require_once(__DIR__. '/../models/Patient.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
    // Nettoyage et validation du nom.
@@ -72,6 +66,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             if ($isOkPhoneNumber == false) {
                 $errorPhoneNumber = '<script>alert("Le numéros de téléphone n\'est pas conforme.")</script>';
             }
+        }
+
+        try {
+            $bdd = New PDO (DSN,USER,PWD);
+            $patient = New Patient($lastname, $firstname, $dateOfBirth, $phoneNumber, $email);
+            $patient->addPatient();
+
+        } catch (PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
         }
     }
 
