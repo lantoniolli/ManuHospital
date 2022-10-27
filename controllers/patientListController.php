@@ -3,7 +3,7 @@
 require_once(__DIR__.'/../config/config.php');
 
 try {
-    $bdd = New PDO (DSN,USER,PWD);
+    $bdd = Patients::DisplayAll();
     $formule = "SELECT `id`,`lastname`, `firstname`, `birthdate`, `phone`, `mail` FROM `patients`";
     $sth = $bdd->query($formule);
     $fullPatients = $sth->fetchAll(PDO::FETCH_OBJ);
