@@ -9,11 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $lastname = trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_SPECIAL_CHARS));
         // Validation
         if (empty($lastname)) {
-            $errorName = '<script>alert("Le nom est obligatoire.")</script>';
+            $error['lastname'] = 'Le nom est obligatoire.';
         } else {
-            $isOkName = filter_var($lastname, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_FOR_NAME . '/')));
-            if ($isOkName == false) {
-                $errorName = '<script>alert("Le nom n\'est pas conforme.")</script>';
+            $isOklastname = filter_var($lastname, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_FOR_NAME . '/')));
+            if ($isOklastname == false) {
+                $error['lastname'] = 'Le nom n\'est pas conforme.';
             }
         }
 
@@ -22,11 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $firstname = trim(filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_SPECIAL_CHARS));
         // Validation
         if (empty($firstname)) {
-            $errorFirstname = '<script>alert("Le prénom est obligatoire.")</script>';
+            $error['firstname'] = 'Le prénom est obligatoire.';
         } else {
-            $isOkName = filter_var($firstname, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_FOR_NAME . '/')));
-            if ($isOkName == false) {
-                $errorFirstname = '<script>alert("Le prénom n\'est pas conforme.")</script>';
+            $isOkfirstname = filter_var($firstname, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_FOR_NAME . '/')));
+            if ($isOkfirstname == false) {
+                $error['firstname'] = 'Le prénom n\'est pas conforme.';
             }
         }
    // Nettoyage et validation de la date de naissance.
@@ -34,24 +34,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $dateOfBirth = trim((string) filter_input(INPUT_POST, 'dateOfBirth', FILTER_SANITIZE_SPECIAL_CHARS));
         // Validation 
         if (empty($dateOfBirth)) {
-            $errorDateOfBirth = '<script>alert("La date de naissance est obligatoire.")</script>';
+            $error['DateOfBirth'] = '<script>alert("La date de naissance est obligatoire.")</script>';
         } else {
             $isOkDateOfBirth = filter_var($dateOfBirth, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_FOR_DATE . '/')));
             if ($isOkDateOfBirth == false) {
-                $errorDateOfBirth = '<script>alert("La date de naissance n\'est pas conforme.")</script>';
+                $error['DateOfBirth'] = 'La date de naissance n\'est pas conforme.';
             }
         }
 
          // Nettoyage et validation de l'e-mail.
         // Nettoyage 
         $email = trim(filter_input(INPUT_POST, 'mail', FILTER_SANITIZE_EMAIL));
+        if(Patient::exist($email) == true){
+            header('Location: /controllers/addUserController.php');
+            exit();
+        }
+        
+        Patient::exist($email);
         // Validation
         if (empty($email)) {
-            $errorEmail = '<script>alert("Le mail est obligatoire.")</script>';
+            $error['Email'] = '<script>alert("Le mail est obligatoire.")</script>';
         } else {
             $isOkEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
             if ($isOkEmail == false) {
-                $errorEmail = '<script>alert("Le mail n\'est pas conforme.")</script>';
+                $error['Email'] = 'Le mail n\'est pas conforme.';
             }
         }
         
@@ -60,21 +66,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $phoneNumber = trim(filter_input(INPUT_POST, 'phoneNumber', FILTER_SANITIZE_SPECIAL_CHARS));
         // Validation
         if (empty($phoneNumber)) {
-            $errorPhoneNumber = '<script>alert("Le numéros de téléphone est obligatoire.")</script>';
+            $error['PhoneNumber'] = '<script>alert("Le numéros de téléphone est obligatoire.")</script>';
         } else {
             $isOkPhoneNumber = filter_var($phoneNumber, FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => '/' . REGEX_FOR_PHONENUMBER . '/')));
             if ($isOkPhoneNumber == false) {
-                $errorPhoneNumber = '<script>alert("Le numéros de téléphone n\'est pas conforme.")</script>';
+                $error['PhoneNumber'] = 'Le numéros de téléphone n\'est pas conforme.';
             }
         }
 
-        try {
-            $bdd = New PDO (DSN,USER,PWD);
-            $patient = New Patient($lastname, $firstname, $dateOfBirth, $phoneNumber, $email);
-            $patient->addPatient();
+        if (empty($error)){
+            try {
+                // $bdd = New PDO (DSN,USER,PWD);
+                $patient = New Patient();
+                $patient->setLastName($lastname);
+                $patient->setFirstName($firstname);
+                $patient->setBirthDate($dateOfBirth);
+                $patient->setPhone($phoneNumber);
+                $patient->setMail($email);
 
-        } catch (PDOException $e) {
-            die('Erreur : ' . $e->getMessage());
+                $isPatientAdded = $patient->add();
+
+            } catch (PDOException $e) {
+                die('Erreur : ' . $e->getMessage());
+            }
         }
     }
 

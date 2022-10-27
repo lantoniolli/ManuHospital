@@ -96,7 +96,7 @@
         <li class="nav-item">
           <a href="/controllers/patientListController.php" class="nav-link text-light">
             <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-            <i class="bi bi-list-nested p-3"></i> Liste des Patients
+            <i class="bi bi-list-nested p-3 text-muted text-opacity-75"></i> Liste des Patients
           </a>
         </li>
         <li class="nav-item">

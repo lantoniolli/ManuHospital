@@ -1,5 +1,6 @@
 <?php
-require_once(__DIR__. '/../config/config.php');
+require_once(__DIR__. '/../helpers/database.php');
+
 
     class Patient{
         private int $_id;
@@ -9,77 +10,137 @@ require_once(__DIR__. '/../config/config.php');
         private string $_phone;
         private string $_mail;
 
-        // start fonction construct //
+// start fonction construct //
 
-        public function __construct(string $lastname, string $firstname, string $birthdate, string $phone, string $mail)
-        {
-            $this->_lastname = $lastname;
-            $this->_firstname = $firstname ;
-            $this->_birthdate = $birthdate;
-            $this ->_phone = $phone;
-            $this->_mail = $mail;
-        }
+        // public function __construct(string $lastname, string $firstname, string $birthdate, string $phone, string $mail)
+        // {
+        //     $this->_lastname = $lastname;
+        //     $this->_firstname = $firstname ;
+        //     $this->_birthdate = $birthdate;
+        //     $this ->_phone = $phone;
+        //     $this->_mail = $mail;
+        // }
 // end fonction construct
 
 // Défintion des Getters //
 
+        /** Récupère la valeur de l'ID.
+         * @return int
+         */
         public function getId():int {
             return $this->_id;
         }
+        /** Récupère la valeur du Nom de Famille.
+         * @return string
+         */
         public function getLastName(): string {
             return $this->_lastname;
         }
+        /** Récupère la valeur du Prénom.
+         * @return string
+         */
         public function getFirstName(): string {
             return $this->_firstname;
         }
+        /** Récupère la valeur de la Date de Naissance.
+         * @return string
+         */
         public function getBirthDate(): string {
             return $this->_birthdate;
         }
+        /** Récupère la valeur du n° de téléphone.
+         * @return string
+         */
         public function getPhone(): string {
             return $this->_phone;
         }
+        /** Récupère la valeur de l'Email.
+         * @return string
+         */
         public function getMail(): string {
             return $this->_mail;
         }
 
 // Définition des Setters //
 
-        public function setId(int $valueId){
+        /** Hydrate la valeur de l'ID.
+         * @param int $valueId
+         * 
+         * @return [void]
+         */
+        public function setId(int $valueId):void{
             $this->_id = $valueId;
         }
-        public function setLastName(string $valueLastName){
+        /** Hydrate la valeur du Nom de Famille
+         * @param string $valueLastName
+         * 
+         * @return [void]
+         */
+        public function setLastName(string $valueLastName):void{
             $this->_lastname = $valueLastName;
         }
-        public function setFirstName(string $valueFirstName){
+        /** Hydrate la valeur du Prénom
+         * @param string $valueFirstName
+         * 
+         * @return [void]
+         */
+        public function setFirstName(string $valueFirstName):void{
             $this->_firstname = $valueFirstName;
         }
-        public function setBirthDate(string $valueBirthDate){
+        /** Hydrate la valeur de la date de naissance.
+         * @param string $valueBirthDate
+         * 
+         * @return [void]
+         */
+        public function setBirthDate(string $valueBirthDate):void{
             $this->_birthdate = $valueBirthDate;
         }
-        public function setPhone(string $valuePhone){
+        /** Hydrate la valeur du numéro de téléphone
+         * @param string $valuePhone
+         * 
+         * @return [void]
+         */
+        public function setPhone(string $valuePhone):void{
             $this->_phone = $valuePhone;
         }
-        public function setMail(string $valueMail){
+        /** Hydrate la valeur du Mail.
+         * @param string $valueMail
+         * 
+         * @return [void]
+         */
+        public function setMail(string $valueMail):void{
             $this->_mail = $valueMail;
         }
 
-// Définition des fonctions utiles.
-// Fonction d'ajout de patients.
 
-        public function addPatient(){
+// **********************  Définition des fonctions utiles. ********************************** //
+// Fonction d'ajout de patients non static puisqu'elle ajoute ou modifie des choses de la base de données.
+        public function add(){
             $addpatient = 'INSERT INTO `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`) VALUES (:lastname, :firstname, :birthdate, :phone, :mail)';
             
-            $bdd = New PDO (DSN,USER,PWD);
+            
 
-            $insertPatient = $bdd->prepare($addpatient);
+            $sth = Database::getInstance()->prepare($addpatient);
 
-            $insertPatient->bindParam(':lastname', $this->_lastname);
-            $insertPatient->bindParam(':firstname', $this->_firstname);
-            $insertPatient->bindParam(':birthdate', $this->_birthdate);
-            $insertPatient->bindParam(':phone', $this->_phone);
-            $insertPatient->bindParam(':mail', $this->_mail);
+            $sth->bindValue(':lastname', $this->getLastName());
+            $sth->bindValue(':firstname', $this->getFirstName());
+            $sth->bindValue(':birthdate', $this->getBirthDate());
+            $sth->bindValue(':phone', $this->getPhone());
+            $sth->bindValue(':mail', $this->getMail());
 
-            $insertPatient->execute();
+            return $sth->execute();
+        }
+// Fonction permettant de vérifier si un utilisateur existe déjà dans la base de données.
+        public static function exist($valueMail){
+            $pdo = Database::getInstance();
+            $stmt = $pdo->prepare("SELECT * FROM `patients` WHERE `mail`= :mail;");
+            $stmt->bindValue(':mail', $valueMail);
+            $stmt->execute();
+            if ($stmt->fetch(PDO::FETCH_OBJ) == false){
+                return false;
+            }else {
+                return true;
+            }
         }
     }
 
