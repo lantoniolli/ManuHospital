@@ -68,7 +68,7 @@
     </nav> -->
     <!-- NAVBAR END -->
     <!-- Vertical navbar -->
-    <div class="vertical-nav bg-dark" id="sidebar">
+    <div class="vertical-nav background_black" id="sidebar">
       <div class="py-4 px-3 mb-4 bg-dark">
         <div class="media d-flex align-items-center">
           <img
@@ -146,7 +146,7 @@
       </ul>
     </div>
     <!-- End vertical navbar -->
-    <div class="page-content p-5" id="content">
+    <div class="page-content p-5 background_clair" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">Menu</small></button>
 
     <h2 class="display-4 text-white">Memorial Hospital</h2>

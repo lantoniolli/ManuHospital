@@ -49,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             header('Location: /controllers/addUserController.php');
             exit();
         }
-        
         Patient::exist($email);
         // Validation
         if (empty($email)) {

@@ -5,6 +5,12 @@
 * ==========================================
 *
 */
+.background_clair{
+  background-color: #2D3035;
+}
+.background_black{
+  background-color: #22252A ;
+}
 
 .vertical-nav {
   min-width: 17rem;
@@ -54,7 +60,7 @@
 /*
 *
 * ==========================================
-* FOR DEMO PURPOSE
+* 
 * ==========================================
 *
 */
@@ -82,3 +88,4 @@ body {
   justify-content: center;
   margin-top:10px;
 }
+
