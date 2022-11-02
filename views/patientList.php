@@ -7,27 +7,21 @@
 <table class="table table-dark table-striped mt-3">
   <thead>
     <tr>
-      <th class="text-center" scope="col">#</th>
       <th class="text-center" scope="col">Nom</th>
       <th class="text-center" scope="col">Prénom</th>
       <th class="text-center" scope="col">Date de Naissance</th>
-      <th class="text-center" scope="col">N° de Téléphone</th>
-      <th class="text-center" class="text-center" scope="col">Adresse E-mail</th>
       <th class="text-center" scope="col">Profil</th>
     </tr>
   </thead>
   <tbody>
     <?php
-    foreach($fullPatients as $fullPatient){
+    foreach($patients as $patient){
       ?>
       <tr>
-      <th class="text-center"scope="row"><?= $fullPatient->id ?></th>
-      <td class="text-center"><?= $fullPatient->lastname ?></td>
-      <td class="text-center"><?= $fullPatient->firstname ?></td>
-      <td class="text-center"><?= date("d/m/Y", strtotime($fullPatient->birthdate)) ?></td>
-      <td class="text-center"><?= $fullPatient->phone ?></td>
-      <td class="text-center"><?= $fullPatient->mail ?></td>
-      <td class="text-center"><i class="bi bi-journal-plus"></i></td>
+      <td class="text-center"><?= $patient->lastname ?></td>
+      <td class="text-center"><?= $patient->firstname ?></td>
+      <td class="text-center"><?= date("d/m/Y", strtotime($patient->birthdate)) ?></td>
+      <td class="text-center"><a href="/controllers/profileUserController.php?id=<?= $patient->id ;?>"><i class="bi bi-person-lines-fill link-light"></i></a></td>
     </tr>
     <?php
     };

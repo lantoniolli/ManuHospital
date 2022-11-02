@@ -131,16 +131,52 @@ require_once(__DIR__. '/../helpers/database.php');
             return $sth->execute();
         }
 // Fonction permettant de vérifier si un utilisateur existe déjà dans la base de données.
-        public static function exist($valueMail){
+        public static function exist(string $valueMail):bool {
             $pdo = Database::getInstance();
-            $stmt = $pdo->prepare("SELECT * FROM `patients` WHERE `mail`= :mail;");
+            $stmt = $pdo->prepare("SELECT `patients`.`id` FROM `patients` WHERE `mail`= :mail;");
             $stmt->bindValue(':mail', $valueMail);
-            $stmt->execute();
-            if ($stmt->fetch(PDO::FETCH_OBJ) == false){
+            $success = $stmt->execute();
+            if ($success){
+            if (empty ($stmt->fetch())){
                 return false;
             }else {
                 return true;
-            }
+            }};
         }
+// Méthode pour afficher tout les patients.
+        public static function getAll():array{
+            $sql = 'SELECT `id`, `lastname`, `firstname`, `birthdate` FROM `patients`;';
+            $sth = Database::getInstance()->query($sql);
+            $patients = $sth->fetchAll();
+            return $patients;
+        }
+        // Méthode pour afficher le profil d'un patient
+        public static function getOne(int $id){
+            $sth = Database::getInstance()->prepare('SELECT * FROM `patients` WHERE `id`= :id');
+            $sth-> bindValue(':id', $id, PDO::PARAM_INT);
+            $sth->execute();
+            return $sth->fetch();
+        }
+
+        // Méthode pour modifier le profil du patient.
+        public function modifyPatient(){
+            $modifyPatient = 'UPDATE `patients` SET `lastname`=:lastname, `firstname`=:firstname,`birthdate`=:birthdate, `phone`=:phone, `mail`=:mail WHERE `id`=:id';  
+            
+            $sth = Database::getInstance()->prepare($modifyPatient);
+
+            $sth->bindValue(':lastname', $this->getLastName());
+            $sth->bindValue(':firstname', $this->getFirstName());
+            $sth->bindValue(':birthdate', $this->getBirthDate());
+            $sth->bindValue(':phone', $this->getPhone());
+            $sth->bindValue(':mail', $this->getMail());
+            $sth->bindValue(':id', $this->getId(), PDO::PARAM_INT);
+
+            if ($sth->execute()){
+                $result = $sth->rowCount();
+                return ($result >= 1)? true : false ; 
+            };
+
+                }
     }
 
+    

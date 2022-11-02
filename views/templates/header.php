@@ -138,17 +138,23 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link text-light">
+          <a href="/controllers/addAppointment.php" class="nav-link text-light">
             <i class="bi bi-pen p-3"></i>
-            Gérer les rendez-vous
+            Ajouter un rendez-vous
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/controllers/addAppointment.php" class="nav-link text-light">
+          <i class="bi bi-list-nested p-3"></i>
+            Planning des rendez-vous
           </a>
         </li>
       </ul>
     </div>
     <!-- End vertical navbar -->
-    <div class="page-content p-5 background_clair" id="content">
+    <div class="page-content p-1 background_clair" id="content">
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">Menu</small></button>
 
-    <h2 class="display-4 text-white">Memorial Hospital</h2>
-    <p class="lead text-white mb-0">Gestion par Utilisateur.</p>
+    <h2 class="display-4 text-white p-2">Memorial Hospital</h2>
+    <p class="lead text-white mb-0 p-2">Gestion par Utilisateur.</p>
     <div class="separator"></div>
