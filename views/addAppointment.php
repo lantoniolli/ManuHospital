@@ -23,7 +23,7 @@
                 </select>
             </div>
         </div>
-         <div class="col-sm-2">
+        <div class="col-sm-2">
             <div class="form-group">
                 <select class="form-select form-select-sm mb-6" aria-label=".form-select-lg example">
                     <option selected>Nom du Patient</option>

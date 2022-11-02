@@ -4,10 +4,15 @@ require_once(__DIR__.'/../config/config.php');
 require_once(__DIR__. '/../models/Appointment.php');
 require_once(__DIR__.'/../models/Patient.php');
 
-try {
-    $patients = Patient::getAll();
-} catch (PDOException) {
-    echo ('ERREUR');
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if (empty($error)){
+        try {
+            $appointment = New Appointment();
+            
+        } catch (PDOException) {
+            echo ('ERREUR');
+        }
+    }
 }
 
 include(__DIR__.'/../views/templates/header.php');

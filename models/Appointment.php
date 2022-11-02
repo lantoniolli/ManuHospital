@@ -34,10 +34,18 @@ class Appointment {
 
 // *************** Définition des fonctions utiles **************** //
 
+public function __construct(int $dateHour, int $idPatients){
+
+    $this->_dateHour = $dateHour;
+    $this->_idPatients = $idPatients;
+}
+
+
 public function add(){
     $addappointment = 'INSERT INTO `appointments` (`dateHour`, `idPatients`) VALUES (:dateHour, :idPatient)';
 
     $sth= Database::getInstance()->prepare($addappointment);
+
 
 }
 
