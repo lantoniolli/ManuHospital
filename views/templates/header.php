@@ -138,13 +138,13 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="/controllers/addAppointment.php" class="nav-link text-light">
+          <a href="/controllers/addAppointmentController.php" class="nav-link text-light">
             <i class="bi bi-pen p-3"></i>
             Ajouter un rendez-vous
           </a>
         </li>
         <li class="nav-item">
-          <a href="/controllers/addAppointment.php" class="nav-link text-light">
+          <a href="/controllers/appointmentListController.php" class="nav-link text-light">
           <i class="bi bi-list-nested p-3"></i>
             Planning des rendez-vous
           </a>
