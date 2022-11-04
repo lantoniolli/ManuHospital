@@ -65,13 +65,13 @@ class Appointment
 
     public static function getAll():array
     {
-        $sql = 'SELECT * FROM `appointments` INNER JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` ';
+        $sql = 'SELECT `appointments`.`id`, `patients`.`lastname`, `patients`.`firstname`, `appointments`.`dateHour`  FROM `appointments` INNER JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` ';
         $sth = Database::getInstance()->query($sql);
         $appointements = $sth->fetchAll();
         return $appointements;
     }
     public static function getOne(int $id){
-        $sth = Database::getInstance()->prepare('SELECT * FROM `appointments` INNER JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id`');
+        $sth = Database::getInstance()->prepare('SELECT * FROM `appointments` INNER JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` WHERE `appointments`.`id`=:id;');
         $sth-> bindValue(':id', $id, PDO::PARAM_INT);
         $sth->execute();
         return $sth->fetch();

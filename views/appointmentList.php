@@ -15,13 +15,13 @@
     </thead>
     <tbody>
         <?php
-        foreach ($appointmentsList as $appointment) {
+        foreach ($appointments as $appointment) {
         ?>
             <tr>
                 <td class="text-center"><?= $appointment->lastname ?></td>
                 <td class="text-center"><?= $appointment->firstname ?></td>
                 <td class="text-center"><?= date("d/m/Y H:i", strtotime($appointment->dateHour)) ?></td>
-                <td class="text-center"><a href="/controllers/profileUserController.php?id=<?= $appointment->id; ?>"><i class="bi bi-person-lines-fill link-light"></i></a></td>
+                <td class="text-center"><a href="/controllers/appointmentDetailController.php?id=<?= $appointment->id; ?>"><i class="bi bi-person-lines-fill link-light"></i></a></td>
             </tr>
         <?php
         };
