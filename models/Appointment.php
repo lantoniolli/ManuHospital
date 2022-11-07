@@ -63,7 +63,7 @@ class Appointment
         }
     }
 
-    public static function getAll():array
+    public static function getAll()
     {
         $sql = 'SELECT `appointments`.`id`, `patients`.`lastname`, `patients`.`firstname`, `appointments`.`dateHour`  FROM `appointments` INNER JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` ';
         $sth = Database::getInstance()->query($sql);
@@ -71,9 +71,34 @@ class Appointment
         return $appointements;
     }
     public static function getOne(int $id){
-        $sth = Database::getInstance()->prepare('SELECT * FROM `appointments` INNER JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` WHERE `appointments`.`id`=:id;');
+        $sth = Database::getInstance()->prepare('SELECT `appointments`.`id` AS apptID, `appointments`.`dateHour`, `patients`.`firstname`, `patients`.`lastname` FROM `appointments` 
+        INNER JOIN `patients` 
+        ON `appointments`.`idPatients` = `patients`.`id` 
+        WHERE `appointments`.`id`=:id;');
         $sth-> bindValue(':id', $id, PDO::PARAM_INT);
         $sth->execute();
         return $sth->fetch();
+    }
+
+    public static function getAllforClient($id){
+        $sth = Database::getInstance()->prepare('SELECT `dateHour` FROM `appointments` INNER JOIN `patients` ON `appointments`.idPatients = `patients`.id WHERE `patients`.`id` = :id ORDER BY `dateHour`;');
+            $sth->bindValue(':id', $id);
+            $sth->execute();
+            return $sth->fetchAll(PDO::FETCH_OBJ);
+        }
+
+    public static function modify($id, $dateHour){
+        $modify = 'UPDATE `appointments` SET `dateHour`=:dateHour WHERE `appointments`.`id`=:id;';
+        $sth = Database::getInstance()->prepare($modify);
+        $sth->bindValue(':dateHour', $dateHour);
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->execute();
+    }
+
+    public static function delete($id){
+        $delete = 'DELETE FROM `appointments` WHERE `appointments`.`id`=:id;';
+        $sth = DATABASE::getInstance()->prepare(($delete));
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->execute();
     }
 }

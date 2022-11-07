@@ -8,7 +8,7 @@
 
     try {
         // $patient = Patient::getOne($id);
-        $appointments = Appointment::getAll();
+        $appointments = Appointment::getOne($id);
     } catch (PDOException $e) {
         die ('ERREUR :' .$e->getMessage());
     }

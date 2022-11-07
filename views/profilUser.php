@@ -32,7 +32,13 @@
                                     </div>
                                     <div class="col-6 mb-3 text-center">
                                         <h6 class="text-white">Rendez-Vous</h6>
-                                        
+                                        <select><?php
+                                        foreach($appointments as $appointment){?>
+                                            <option><?= date("d-m-Y H:i", strtotime($appointment->dateHour)) ?></option>
+
+                                        <?php 
+                                            } ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center">

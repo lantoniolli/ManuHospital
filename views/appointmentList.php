@@ -21,7 +21,8 @@
                 <td class="text-center"><?= $appointment->lastname ?></td>
                 <td class="text-center"><?= $appointment->firstname ?></td>
                 <td class="text-center"><?= date("d/m/Y H:i", strtotime($appointment->dateHour)) ?></td>
-                <td class="text-center"><a href="/controllers/appointmentDetailController.php?id=<?= $appointment->id; ?>"><i class="bi bi-person-lines-fill link-light"></i></a></td>
+                <td class="text-center"><a href="/controllers/appointmentDetailController.php?id=<?= $appointment->id; ?>"><i class="bi bi-person-lines-fill link-light"></i></a>
+                <a href="/controllers/deleteAppointmentController.php?id=<?= $appointment->id; ?>"><i class="bi bi-trash-fill text-danger"></i></a></td>
             </tr>
         <?php
         };
