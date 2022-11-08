@@ -8,6 +8,7 @@ try {
     
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $time = filter_input(INPUT_POST, 'time', FILTER_SANITIZE_NUMBER_INT);
+        $date = trim((string) filter_input(INPUT_POST, 'date', FILTER_SANITIZE_NUMBER_INT));
         // Validation
         if (empty($time)) {
             $error['time'] = 'L\'heure est obligatoire.';
@@ -30,7 +31,6 @@ try {
                 $time = '16:00:00';
             }
         }
-        $date = trim((string) filter_input(INPUT_POST, 'date', FILTER_SANITIZE_NUMBER_INT));
         // Validation 
         if (empty($date)) {
             $error['date'] = 'La date est obligatoire.';
@@ -41,7 +41,6 @@ try {
             }
         }
         if (empty($error)) {
-            
             $dateHour = $date . ' ' . $time;
             $updatedAppointment = Appointment::modify($id, $dateHour);
             if($isUpdatedAppointment == true) {

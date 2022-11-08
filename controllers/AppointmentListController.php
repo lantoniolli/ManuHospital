@@ -5,10 +5,8 @@ require_once(__DIR__.'/../models/Patient.php');
 require_once(__DIR__.'/../models/Appointment.php');
 
 try {
-
-
+    // variable dans laquelle je stocke le retour de la méthode getAll.
     $appointments = Appointment::getAll();
-    // $patients = Patient::getAll();
 } catch (PDOException) {
     echo ('ERREUR');
 }

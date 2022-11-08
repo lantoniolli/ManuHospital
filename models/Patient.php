@@ -117,8 +117,6 @@ require_once(__DIR__. '/../helpers/database.php');
 // Fonction d'ajout de patients non static puisqu'elle ajoute ou modifie des choses de la base de données.
         public function add(){
             $addpatient = 'INSERT INTO `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`) VALUES (:lastname, :firstname, :birthdate, :phone, :mail)';
-            
-            
 
             $sth = Database::getInstance()->prepare($addpatient);
 
@@ -144,12 +142,22 @@ require_once(__DIR__. '/../helpers/database.php');
             }};
         }
 // Méthode pour afficher tout les patients.
-        public static function getAll():array{
-            $sql = 'SELECT `id`, `lastname`, `firstname`, `birthdate` FROM `patients`;';
+        public static function getAll($search = ''):array{
+            if(empty($search)){
+                $sql = 'SELECT `id`, `lastname`, `firstname`, `birthdate` FROM `patients`';
             $sth = Database::getInstance()->query($sql);
-            $patients = $sth->fetchAll();
-            return $patients;
+                $patients = $sth->fetchAll();
+                return $patients; 
+            } else {
+                $sql = 'SELECT `id`, `lastname`, `firstname`, `birthdate` FROM `patients` WHERE `lastname`=:search OR `firstname`=:search OR `birthdate`=:search OR `phone`=:search OR `mail`=:search';
+            $sth = Database::getInstance()->prepare($sql);
+            $sth->bindValue(':search', $search);
+            if($sth->execute()){
+                $patients = $sth->fetchAll();
+                return $patients;
+            }
         }
+    }
         // Méthode pour afficher le profil d'un patient
         public static function getOne(int $id){
             $sth = Database::getInstance()->prepare('SELECT * FROM `patients` WHERE `id`= :id');
@@ -177,6 +185,10 @@ require_once(__DIR__. '/../helpers/database.php');
             };
 
                 }
+        public static function deleteAll($id){
+            $deleteAll = 'DELETE FROM `patients` WHERE `patients`.`id`=:id;';
+            $sth = DATABASE::getInstance()->prepare(($deleteAll));
+            $sth->bindValue(':id', $id, PDO::PARAM_INT);
+            $sth->execute();
+        }
     }
-
-    

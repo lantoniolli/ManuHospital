@@ -101,4 +101,5 @@ class Appointment
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
         $sth->execute();
     }
+
 }
