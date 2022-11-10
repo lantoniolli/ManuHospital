@@ -3,6 +3,15 @@
 </div>
 <div class="col-md-3 text-end">
 
+<!-- Emplacement pour container des erreurs/ validation. -->
+<?php
+  if(SessionFlash::exist()){ ?>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert"> 
+            <?=SessionFlash::get();?>
+            <button type="button" class="btn-close" dara-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+  <?php } ?>
+
   <form method="post">
     <div class="input-group mb-3">
       <input type="text" class="form-control" placeholder="Écrire un nom" name="search" aria-describedby="button-addon2">
@@ -40,5 +49,17 @@
     <?php
     };
     ?>
+  
+    <nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+    
   </tbody>
 </table>
+

@@ -27,6 +27,12 @@ class Appointment
 
     // Définition des Setters
 
+    /**
+     * Définit la valeur de l'ID.
+     * @param int $valueId
+     * 
+     * @return void
+     */
     public function setId(int $valueId): void
     {
         $this->_id = $valueId;
@@ -51,6 +57,10 @@ class Appointment
     }
 
 
+    /**
+     * Ajoute un rendez-vous dans la base de données.
+     * @return bool
+     */
     public function add(): bool
     {
         $addappointment = 'INSERT INTO `appointments` (`dateHour`, `idPatients`) VALUES (:dateHour, :idPatients)';
@@ -70,24 +80,27 @@ class Appointment
         $appointements = $sth->fetchAll();
         return $appointements;
     }
-    public static function getOne(int $id){
+    public static function getOne(int $id)
+    {
         $sth = Database::getInstance()->prepare('SELECT `appointments`.`id` AS apptID, `appointments`.`dateHour`, `patients`.`firstname`, `patients`.`lastname` FROM `appointments` 
         INNER JOIN `patients` 
         ON `appointments`.`idPatients` = `patients`.`id` 
         WHERE `appointments`.`id`=:id;');
-        $sth-> bindValue(':id', $id, PDO::PARAM_INT);
+        $sth->bindValue(':id', $id, PDO::PARAM_INT);
         $sth->execute();
         return $sth->fetch();
     }
 
-    public static function getAllforClient($id){
+    public static function getAllforClient($id)
+    {
         $sth = Database::getInstance()->prepare('SELECT `dateHour` FROM `appointments` INNER JOIN `patients` ON `appointments`.idPatients = `patients`.id WHERE `patients`.`id` = :id ORDER BY `dateHour`;');
-            $sth->bindValue(':id', $id);
-            $sth->execute();
-            return $sth->fetchAll(PDO::FETCH_OBJ);
-        }
+        $sth->bindValue(':id', $id);
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_OBJ);
+    }
 
-    public static function modify($id, $dateHour){
+    public static function modify($id, $dateHour)
+    {
         $modify = 'UPDATE `appointments` SET `dateHour`=:dateHour WHERE `appointments`.`id`=:id;';
         $sth = Database::getInstance()->prepare($modify);
         $sth->bindValue(':dateHour', $dateHour);
@@ -95,11 +108,17 @@ class Appointment
         $sth->execute();
     }
 
-    public static function delete($id){
+    public static function delete($id)
+    {
         $delete = 'DELETE FROM `appointments` WHERE `appointments`.`id`=:id;';
         $sth = DATABASE::getInstance()->prepare(($delete));
         $sth->bindValue(':id', $id, PDO::PARAM_INT);
-        $sth->execute();
+        if ($sth->execute()) {
+            if ($sth->rowCount() == 1) {
+                return true;
+            } else {
+                return false;
+            };
+        }
     }
-
 }

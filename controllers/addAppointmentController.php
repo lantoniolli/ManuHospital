@@ -1,5 +1,4 @@
 <?php
-
 require_once(__DIR__ . '/../config/config.php');
 require_once(__DIR__ . '/../models/Appointment.php');
 require_once(__DIR__ . '/../models/Patient.php');
@@ -62,6 +61,11 @@ try {
                 
             // Appel de la méthode permettant d'ajouter les données dans la base de donnée.
             $isAddedAppointment = $appointment->add();
+
+            if($appointment){
+                SessionFlash::set('Le rendez-vous a bien été ajouté');
+                header('location: /controllers/AppointmentListController.php');
+            }
         }
     }
 } catch (PDOException $e) {

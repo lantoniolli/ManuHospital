@@ -1,4 +1,7 @@
 <?php
+session_start();
+require_once(__DIR__. '/../helpers/sessionflash.php');
+
 
     define ('DSN', 'mysql:host=localhost;dbname=hospitale2N;charset=utf8');
     define ('USER','staff');
@@ -7,9 +10,6 @@
 // Définition des regex.
     // Regex pour le nom et prénom.
     define('REGEX_FOR_NAME', "^[a-zA-ZÀ-ÿ '-]+$");
-
-    // Regex pour le numéro de sécuriter sociale.
-    define('REGEX_FOR_SOCIALECODE', "[12][0-9]{2}(0[1-9]|1[0-2])(2[AB]|[0-9]{2})[0-9]{3}[0-9]{3}([0-9]{2})");
 
     // Regex pout les dates.
     define('REGEX_FOR_DATE', "^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$");
