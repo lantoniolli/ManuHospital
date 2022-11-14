@@ -4,7 +4,8 @@ require_once(__DIR__ . '/../models/Appointment.php');
 require_once(__DIR__ . '/../models/Patient.php');
 
 try {
-    $patients = Patient::getAll();
+    $nbPatients = Patient::count();
+    $patients = Patient::getAll($nbPatients, 0);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 

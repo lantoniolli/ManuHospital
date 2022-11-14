@@ -52,13 +52,14 @@
   
     <nav aria-label="Page navigation example">
   <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
-</nav>
+    <!-- Lien vers la page précédente (désactivé si on se trouve sur la 1ère page) -->
+    <li class="page-item <?= ($currentPage == 1) ? "disabled" : "" ?>">
+    <a href="/controllers/patientListController.php?page=<?= $currentPage - 1 ?>">Précédent</a> 
+    </li>
+    <span><?= $currentPage ?></span>
+            <a href="/controllers/patientListController.php?page=<?= $currentPage + 1 ?>">Suivant</a>
+        </div>
+    </nav>
     
   </tbody>
 </table>

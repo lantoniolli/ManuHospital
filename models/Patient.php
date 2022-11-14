@@ -157,24 +157,24 @@ class Patient
             }
         };
     }
-    public static function getAll($search = ''): array
-    {
-        if (empty($search)) {
-            $sql = 'SELECT `id`, `lastname`, `firstname`, `birthdate` FROM `patients`';
-            $sth = Database::getInstance()->query($sql);
-            $patients = $sth->fetchAll();
+    // public static function getAll($search = ''): array
+    // {
+    //     if (empty($search)) {
+    //         $sql = 'SELECT `id`, `lastname`, `firstname`, `birthdate` FROM `patients`';
+    //         $sth = Database::getInstance()->query($sql);
+    //         $patients = $sth->fetchAll();
             
-            return $patients;
-        } else {
-            $sql = 'SELECT `id`, `lastname`, `firstname`, `birthdate` FROM `patients` WHERE `lastname`=:search OR `firstname`=:search OR `birthdate`=:search OR `phone`=:search OR `mail`=:search';
-            $sth = Database::getInstance()->prepare($sql);
-            $sth->bindValue(':search', $search);
-            if ($sth->execute()) {
-                $patients = $sth->fetchAll();
-                return $patients;
-            }
-        }
-    }
+    //         return $patients;
+    //     } else {
+    //         $sql = 'SELECT `id`, `lastname`, `firstname`, `birthdate` FROM `patients` WHERE `lastname`=:search OR `firstname`=:search OR `birthdate`=:search OR `phone`=:search OR `mail`=:search';
+    //         $sth = Database::getInstance()->prepare($sql);
+    //         $sth->bindValue(':search', $search);
+    //         if ($sth->execute()) {
+    //             $patients = $sth->fetchAll();
+    //             return $patients;
+    //         }
+    //     }
+    // }
     // Méthode pour afficher le profil d'un patient
     public static function getOne(int $id)
     {
@@ -215,6 +215,43 @@ class Patient
                 return false;
             };
         }
-    }  
+    }
+
+     // Méthode pour afficher tous les patients avec une barre de recherche.
+    public static function getAll($limit, $offset, $search = ''){
+        if (empty($search)) {
+            $sql = 'SELECT * FROM `patients` LIMIT :limit OFFSET :offset;';
+            $sth = Database::getInstance()->prepare($sql);
+            $sth->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $sth->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $sth->execute();
+            // On récupère les valeurs dans un tableau associatif.
+            $patients = $sth->fetchAll(PDO::FETCH_OBJ);
+            return $patients;
+        } else {
+            $sql = 'SELECT * FROM `patients` 
+            WHERE `lastname` = :search 
+            OR `firstname` = :search 
+            OR `birthdate` = :search 
+            OR `phone` = :search 
+            OR `mail` = :search 
+            OR `socialSecureCode` = :search;';
+            $sth = Database::getInstance()->prepare($sql);
+            $sth->bindValue(':search', $search);
+            if ($sth->execute()) {
+                $patients = $sth->fetchAll(PDO::FETCH_OBJ);
+                return $patients;
+            }    
+        }
+    }
+
+// Méthode pour calculé le nombre totale de patients.
+    public static function count(){
+        $sql = 'SELECT COUNT(*) AS `nbPatients` FROM `patients`;';
+        $sth = Database::getInstance()->prepare($sql);
+        $sth->execute();
+        $count = $sth->fetch();
+        return (int) $count->nbPatients;
+    }
 
 }
