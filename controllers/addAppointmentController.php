@@ -51,7 +51,6 @@ try {
         // Nettoyage et validation de patients.
         // Nettoyage
         $idPatients = intval(filter_input(INPUT_POST, 'patients', FILTER_SANITIZE_NUMBER_INT));
-        var_dump($idPatients);
         if (empty($error)) {
 
             // Concatenation de la date et de l'heure pour la formater au format de la base de données.

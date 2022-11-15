@@ -230,14 +230,13 @@ class Patient
             return $patients;
         } else {
             $sql = 'SELECT * FROM `patients` 
-            WHERE `lastname` = :search 
-            OR `firstname` = :search 
+            WHERE `lastname` LIKE :search 
+            OR `firstname` LIKE :search 
             OR `birthdate` = :search 
             OR `phone` = :search 
-            OR `mail` = :search 
-            OR `socialSecureCode` = :search;';
+            OR `mail` = :search';
             $sth = Database::getInstance()->prepare($sql);
-            $sth->bindValue(':search', $search);
+            $sth->bindValue(':search', '%'.$search.'%');
             if ($sth->execute()) {
                 $patients = $sth->fetchAll(PDO::FETCH_OBJ);
                 return $patients;
@@ -253,5 +252,6 @@ class Patient
         $count = $sth->fetch();
         return (int) $count->nbPatients;
     }
-
 }
+
+

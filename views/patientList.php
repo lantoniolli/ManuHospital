@@ -12,9 +12,9 @@
           </div>
   <?php } ?>
 
-  <form method="post">
+  <form method="get">
     <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Écrire un nom" name="search" aria-describedby="button-addon2">
+      <input type="search" class="form-control" placeholder="Écrire un nom" name="search" aria-describedby="button-addon2">
       <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Rechercher</button>
     </div>
   </form>
