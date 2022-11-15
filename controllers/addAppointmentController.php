@@ -71,7 +71,7 @@ try {
 } catch (PDOException $e) {
     die('ERREUR :' . $e->getMessage());
 }
-
+die;
 include(__DIR__ . '/../views/templates/header.php');
 include(__DIR__ . '/../views/addAppointment.php');
 include(__DIR__ . '/../views/templates/footer.php');

@@ -2,6 +2,10 @@
 
 require_once(__DIR__ . '/../config/config.php');
 require_once(__DIR__ . '/../models/Patient.php');
+Patient::getAll(LIMIT, 12);
+Patient::getAll(LIMIT, 12);
+
+die;
 
 try {
     // On détermine sur quelle page on se trouve

@@ -5,7 +5,8 @@ require_once(__DIR__ . '/../helpers/database.php');
 require_once(__DIR__ . '/../models/Patient.php');
 require_once(__DIR__ . '/../models/Appointment.php');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+try {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     // Nettoyage et validation du nom.
          // Nettoyage
         $lastname = trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_SPECIAL_CHARS));
@@ -44,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             }
         }
 
-          // Nettoyage et validation de l'e-mail.
+     // Nettoyage et validation de l'e-mail.
          // Nettoyage 
         $email = trim(filter_input(INPUT_POST, 'mail', FILTER_SANITIZE_EMAIL));
         if(Patient::exist($email) == true){
@@ -112,33 +113,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             }
         }
 
-        if (empty($error)){
-try {
-    $dbh = Database::getInstance();
-    $patient = New Patient();
-    $patient->setLastName($lastname);
-    $patient->setFirstName($firstname);
-    $patient->setBirthDate($dateOfBirth);
-    $patient->setPhone($phoneNumber);
-    $patient->setMail($email);
-    
-    $isPatientAdded = $patient->add();
-    
-    $dateHour = $date . ' ' . $time;
-    
-    // Création d'un nouvel objet PDO.    
-    $appointment = new Appointment($dateHour, $idPatients);
-    // Appel de la méthode permettant d'ajouter les données dans la base de donnée.
-    $isAddedAppointment = $appointment->add();
-    $dbh->beginTransaction($isPatientAdded, $isAppointmentAdded);
-    $dbh->commit();
+    if (empty($error)){
+
+        $dbh = Database::getInstance();
+        $dbh->beginTransaction();
+        
+        $patient = New Patient();
+        $patient->setLastName($lastname);
+        $patient->setFirstName($firstname);
+        $patient->setBirthDate($dateOfBirth);
+        $patient->setPhone($phoneNumber);
+        $patient->setMail($email);
+        $isPatientAdded = $patient->add();
+        
+        $last_insert_id = $dbh->lastInsertId('patients');
+        var_dump($last_insert_id);
+        if(!empty ($last_insert_id)){
+            $dateHour = $date . ' ' . $time;
+            $appointment = new Appointment($dateHour, $last_insert_id);
+            $isAddedAppointment = $appointment->add();
+    }
+        $dbh->commit();}
+    }
 } catch (PDOException $e) {
     $dbh->rollBack();
     die('ERREUR :' . $e->getMessage());
 }
-        }
-    }
 
+die;
 include(__DIR__ . '/../views/templates/header.php');
 include(__DIR__ . '/../views/addPatientAppt.php');
 include(__DIR__ . '/../views/templates/footer.php');

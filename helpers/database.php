@@ -4,15 +4,21 @@
 
     class Database{
 
-        private object $_pdo;
+        private static object $_pdo;
 
-        /** Fonction qui permet d'instancier la connexion à la base de données.
-         * @return [type]
-         */
+        private function __construct() {
+
+        }
         public static function getInstance(){
-            $pdo = New PDO (DSN,USER,PWD);
-            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+            
+            self::$_pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+            if(self::$_pdo === null){
+                self::$_pdo = New PDO (DSN,USER,PWD);
+                return self::$_pdo;
+            }
+
             // Permet de param les fetch mod.
-            return $pdo;
+            var_dump(self::$_pdo);
+            return self::$_pdo;
         }
     }
