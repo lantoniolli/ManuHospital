@@ -246,7 +246,7 @@ class Patient
 
 // Méthode pour calculé le nombre totale de patients.
     public static function count(){
-        $sql = 'SELECT COUNT(*) AS `nbPatients` FROM `patients`;';
+        $sql = 'SELECT COUNT(`id`) AS `nbPatients` FROM `patients`;';
         $sth = Database::getInstance()->prepare($sql);
         $sth->execute();
         $count = $sth->fetch();

@@ -2,7 +2,7 @@
 session_start();
 require_once(__DIR__. '/../helpers/sessionflash.php');
 
-    define ('LIMIT', '20');
+    define ('LIMIT', '10');
     define ('DSN', 'mysql:host=localhost;dbname=hospitale2N;charset=utf8');
     define ('USER','staff');
     define ('PWD','H2*01r!V0a/WRyOf');

@@ -4,12 +4,12 @@
         <div class="col-sm-2">
             <div class="form-group">
                 <form method="POST">
-                    <input type="date" name="date" id="">
+                    <input type="date" name="date" id="" class="form-select form-select-sm mb-6">
             </div>
         </div>
         <div class="col-sm-2">
             <div class="form-group">
-                <select name="time">
+                <select class="form-select form-select-sm mb-6" name="time">
                     <option>Choisissez un créneau</option>
                     <option value="1">09:00</option>
                     <option value="2">10:00</option>
