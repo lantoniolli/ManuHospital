@@ -1,24 +1,19 @@
 <?php
 
-    require_once(__DIR__. '/../config/config.php');
+require_once(__DIR__ . '/../config/config.php');
 
-    class Database{
+class Database
+{
 
-        private static object $_pdo;
+    private static $pdo;
 
-        private function __construct() {
+    public static function getInstance()
+    {
 
+        if (is_null(self::$pdo)) {
+            self::$pdo = new PDO(DSN, USER, PWD);
+            self::$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
         }
-        public static function getInstance(){
-            
-            self::$_pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-            if(self::$_pdo === null){
-                self::$_pdo = New PDO (DSN,USER,PWD);
-                return self::$_pdo;
-            }
-
-            // Permet de param les fetch mod.
-            var_dump(self::$_pdo);
-            return self::$_pdo;
-        }
+        return self::$pdo;
     }
+}

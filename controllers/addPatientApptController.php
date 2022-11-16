@@ -127,7 +127,6 @@ try {
         $isPatientAdded = $patient->add();
         
         $last_insert_id = $dbh->lastInsertId('patients');
-        var_dump($last_insert_id);
         if(!empty ($last_insert_id)){
             $dateHour = $date . ' ' . $time;
             $appointment = new Appointment($dateHour, $last_insert_id);
@@ -140,7 +139,7 @@ try {
     die('ERREUR :' . $e->getMessage());
 }
 
-die;
+
 include(__DIR__ . '/../views/templates/header.php');
 include(__DIR__ . '/../views/addPatientAppt.php');
 include(__DIR__ . '/../views/templates/footer.php');

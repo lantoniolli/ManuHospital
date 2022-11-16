@@ -250,7 +250,7 @@ class Patient
         $sth = Database::getInstance()->prepare($sql);
         $sth->execute();
         $count = $sth->fetch();
-        return (int) $count->nbPatients;
+        return $count->nbPatients;
     }
 }
 
